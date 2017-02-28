@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.edu.gdmec.s07150808.rss_test.MainActivity">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:background="@color/color1"
+             >
+             <EditText
+                 android:layout_width="620px"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/edit_input"
+                 android:hint="输入你要搜索的新闻"
+                 android:minHeight="75px"
+                 android:paddingLeft="15px"
+                 android:background="@color/color2"
+                android:layout_gravity="center"
+                 />
+             <Button
+                 android:layout_width="150px"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/btn"
+                 android:text="搜索"
+                 />
+         </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_item"
+        android:divider="#FFF"
+        android:dividerHeight="1dp"
+        ></ListView>
+</LinearLayout>
