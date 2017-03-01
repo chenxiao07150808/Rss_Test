@@ -33,6 +33,10 @@ import java.util.Map;
  * Created by chen on 2017/2/28.
  */
 public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Object>>> {
+    public static ArrayList<String> new1=new ArrayList<String>();
+    /*APL接口的格式*/
+    private static String BASE_URL="http://api.avatardata.cn/ActNews/Query?key=";
+    private static String key="ca62ca12a2cf4e958317932f3c5e2829&keyword=";
     /*Activity上下文*/
     private Activity context;
     /*加载提示窗口*/
@@ -41,11 +45,7 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
     private String errorMsg="网络错误!";
     /*天气信息列表*/
     private ListView news_info;
-
-    private String new_URL  ;
-    /*APL接口的格式*/
-    private static String BASE_URL="http://api.avatardata.cn/ActNews/Query?key=";
-    private static String key="ca62ca12a2cf4e958317932f3c5e2829&keyword=";
+    private String new_URL;
 
     public GetNewsInfoTake(Activity context){
         this.context=context;
@@ -77,6 +77,11 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
                         Uri uri = Uri.parse(new_URL);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         context.startActivity(intent);
+                     /*   String str = new1.get(position).toString();
+                        Uri uri  = Uri.parse(str);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        context.startActivity(intent);*/
+
 
                     }
                 }
@@ -105,7 +110,7 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
                     for(int i=0;i<result.length();i++){
 
                         Map<String,Object>item=new HashMap<String,Object>();
-                        JSONObject resultObject=result.getJSONObject(i);
+                         JSONObject resultObject=result.getJSONObject(i);
 
                          new_URL=resultObject.getString("url");
                         item.put("title",resultObject.getString("title"));
@@ -116,6 +121,11 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
                         list.add(item);
 
                     }
+
+                 /*  for (Map<String, Object> list2:list){
+                        new1.add(list2.get("url").toString());
+                    }*/
+
                 }else{
                     errorMsg="非常抱歉,本应用暂不支持你所请求的城市!";
 

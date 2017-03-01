@@ -30,6 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        new GetNewsInfoTake(seft).execute("足球");
+        new GetNewsInfoTake(seft).execute("奥巴马");
     }
 }
