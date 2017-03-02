@@ -3,10 +3,13 @@ package cn.edu.gdmec.s07150808.rss_test;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.ImageFormat;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -46,7 +49,7 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
     /*天气信息列表*/
     private ListView news_info;
     private String new_URL;
-
+    private List<String > list1 = new ArrayList<String>();
     public GetNewsInfoTake(Activity context){
         this.context=context;
        /*获取提示框*/
@@ -72,9 +75,9 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
             news_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(position!=0){
-                        Toast.makeText(context,new_URL,Toast.LENGTH_SHORT).show();
-                        Uri uri = Uri.parse(new_URL);
+                    if(position>0){
+                        Toast.makeText(context,list1.get(position),Toast.LENGTH_SHORT).show();
+                        Uri uri = Uri.parse(list1.get(position));
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         context.startActivity(intent);
                      /*   String str = new1.get(position).toString();
@@ -94,7 +97,6 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
     @Override
     protected List<Map<String, Object>> doInBackground(String... params) {
         List <Map<String,Object>> list=new ArrayList<Map<String,Object>>();
-
         try {
             HttpClient httpClient=new DefaultHttpClient();
             String url=BASE_URL+ key+URLEncoder.encode(params
@@ -105,14 +107,17 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
                 String jsonString= EntityUtils.toString(response.getEntity(),"UTF-8");
                 JSONObject jsondata=new JSONObject(jsonString);
                 if(jsondata.getString("reason").equals("Succes")){
+
                     JSONArray result=jsondata.getJSONArray("result");
                   /*  JSONArray weatherList=result.getJSONArray("future");*/
+
                     for(int i=0;i<result.length();i++){
 
                         Map<String,Object>item=new HashMap<String,Object>();
                          JSONObject resultObject=result.getJSONObject(i);
 
-                         new_URL=resultObject.getString("url");
+
+                        /* new_URL=resultObject.getString("url");*/
                         item.put("title",resultObject.getString("title"));
                         item.put("src",resultObject.getString("src"));
                         item.put("img",resultObject.getString("img"));
@@ -122,9 +127,9 @@ public class GetNewsInfoTake extends AsyncTask<String,Void,List<Map<String,Objec
 
                     }
 
-                 /*  for (Map<String, Object> list2:list){
-                        new1.add(list2.get("url").toString());
-                    }*/
+                   for (Map<String, Object> list2:list){
+                        list1.add(list2.get("url").toString());
+                    }
 
                 }else{
                     errorMsg="非常抱歉,本应用暂不支持你所请求的城市!";
